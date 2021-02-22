@@ -1,0 +1,19 @@
+{% extends "packets/protocol.html" %} {%block protoinfo%}
+
+    <div class="card">
+        <div class="card-header">
+            Analysis
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">About {{ protocol }}</h5>
+            <p class="card-text">This protocol can give information such as:</p>
+            <ul>
+                <li><strong>Manufacturer:</strong> The first bits of the MAC of the devices are related to the device manufacturer. If the user did not change its MAC, the MAC address itself will reveal the device manufacturer.</li>
+                <li><strong>IP address:</strong> This protocol uses the IP layer, so you can get the device IP address.</li>
+                <li><strong>Type of device:</strong> The protocol <strong>BJNP</strong> is used by Canon printers and scanners.
+                <li><strong>Device function:</strong> The protocol <strong>BJNP</strong> protocol uses different ports for different purposes. The four ports/purposes are 8610 for advertising its IP address, 8611 for printing, 8612 for scanning and 8613 for sending and receiving faxes.
+            </ul>
+        </div>
+    </div>
+
+{% endblock %}

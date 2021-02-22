@@ -1,0 +1,24 @@
+{% extends "packets/protocol.html" %} {%block protoinfo%}
+
+    <div class="card">
+        <div class="card-header">
+            Analysis
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">About {{ protocol }}</h5>
+            <p class="card-text">This protocol can give information such as:</p>
+            <ul>
+                <li><strong>Manufacturer:</strong> The first bits of the MAC of the devices are related to the device manufacturer. If the user did not change its MAC, the MAC address itself will reveal the device manufacturer.</li>
+                <li><strong>IP address:</strong> This protocol sometimes uses the IP layer, so you can get the device IP address.</li>
+                <li><strong>IPv6 address:</strong> This protocol sometimes uses the IPv6 layer, so you can get the device link-local IPv6 address.</li>
+                <li><strong>Application port: </strong> This protocol uses the UDP protocol. The value <i>srcport</i> of the UDP protocol contains the port used by the application. </li>
+                <li><strong>Queries: </strong> DNS query names made by the device.</li>
+                <li><strong>Responses: </strong> DNS responses made by the device.</li>
+                <li><strong>Server: </strong> Server targetted.</li>
+                <li><strong>Port: </strong> Target server service port.</li>
+                <li><strong>PTR domain: </strong> DNS PTR record of the target server.</li>
+            </ul>
+        </div>
+    </div>
+
+{% endblock %}

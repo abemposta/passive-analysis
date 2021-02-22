@@ -1,0 +1,24 @@
+{% extends "packets/base.html" %}
+
+{% block content %}
+    <div class="container">
+
+    {% if nextredir %}
+    <form class="form-signin" action="{% url 'user_login' %}?next={{nextredir}}" method="post">
+    {%else%}
+    <form class="form-signin" action="{% url 'user_login' %}" method="post">
+    {% endif %}
+        {% csrf_token %}
+        <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+        {% if error_message %}
+            <p class="bg-danger p-d ml-b">{{ error_message }}</p>
+        {% endif %}
+        <label for="username" class="sr-only">User name</label>
+        <input name="username" type="username" id="inputUser" class="form-control" placeholder="User name" required autofocus>
+        <label for="password" class="sr-only">Password</label>
+        <input name="password" type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+    </form>
+
+    </div>
+{% endblock %}

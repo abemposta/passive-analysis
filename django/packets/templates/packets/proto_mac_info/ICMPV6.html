@@ -1,0 +1,23 @@
+{% load packets_extras %}
+    <div class="card">
+        <div class="card-header">
+            Analysis
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">About ICMPV6</h5>
+            <p class="card-text">The following information was detected analyzing only packets from this protocol:</p>
+            <ul>
+                <!-- MANUFACTURER -->
+                {% for manufacturer in protocol_info|fields:"ICMPV6"|fields:"manufacturer" %}
+                <li><strong>Manufacturer detected:</strong> {{ manufacturer }}</li>
+                {% endfor %}
+
+                <!-- IPv6 address -->
+                {% for ip in protocol_info|fields:"ICMPV6"|fields:"ip" %}
+                <li><strong>IP link-local detected:</strong> {{ ip }}</li>
+                {% endfor %}
+
+
+            </ul>
+        </div>
+    </div>

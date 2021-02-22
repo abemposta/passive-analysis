@@ -1,0 +1,45 @@
+{% load packets_extras %}
+    <div class="card">
+        <div class="card-header">
+            Analysis
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">About BJNP</h5>
+            <p class="card-text">The following information was detected analyzing only packets from this protocol:</p>
+            <ul>
+                <!-- MANUFACTURER -->
+                {% for manufacturer in protocol_info|fields:"BJNP"|fields:"manufacturer" %}
+                <li><strong>Manufacturer detected:</strong> {{ manufacturer }}</li>
+                {% endfor %}
+
+                <li><strong>Type of device:</strong> This device is a Canon printer.  </li>
+
+                <!-- IP -->
+                {% for ip in protocol_info|fields:"BJNP"|fields:"ip" %}
+                <li><strong>IP detected:</strong> {{ ip }}</li>
+                {% endfor %}
+
+                <!-- APPLICATION PORT -->
+                {% for port in protocol_info|fields:"BJNP"|fields:"port" %}
+                    {% if port %}
+                    <li><strong>Application port:</strong> {{ port }}</li>
+                    {% if port == "8610" %}
+                    <li><strong>Device function:</strong> this device used Canon MFNP Service to advertise its IP address to the devices on the same LAN.
+                    {% endif %}
+                    {% if port == "8611" %}
+                    <li><strong>Device function:</strong> this device was used for printing.
+                    {% endif %}
+                    {% if port == "8612" %}
+                    <li><strong>Device function:</strong> this device was used for scanning.
+                    {% endif %}
+                    {% if port == "8613" %}
+                    <li><strong>Device function:</strong> this device was used for sending and receiving faxes.
+                    {% endif %}
+                    {% endif %}
+                {% endfor %}
+
+
+
+            </ul>
+        </div>
+    </div>

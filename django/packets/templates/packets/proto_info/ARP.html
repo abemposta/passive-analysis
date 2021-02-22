@@ -1,0 +1,18 @@
+{% extends "packets/protocol.html" %} {%block protoinfo%}
+
+    <div class="card">
+        <div class="card-header">
+            Analysis
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">About {{ protocol }}</h5>
+            <p class="card-text">This protocol can give information such as:</p>
+            <ul>
+                <li><strong>Manufacturer:</strong> The first bits of the MAC of the devices are related to the device manufacturer. If the user did not change its MAC, the MAC address itself will reveal the device manufacturer.</li>
+                <!-- <li><strong>Type of device:</strong> If the device has a lot of probe requests it is most likely some router or repeater. Check the <i>isprobe</i> ARP field to see if is a ARP probe packet.  </li> -->
+                <li><strong>IP addresses over time:</strong> The ARP protocol is used for keeping a table associating MAC and IP addresses. You can check the <i>src_proto_ipv4</i> field for the device IP address.</li>
+            </ul>
+        </div>
+    </div>
+
+{% endblock %}

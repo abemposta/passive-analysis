@@ -1,0 +1,97 @@
+{% extends "packets/base.html" %} {%block content%}
+
+<!-- request.user.is_authenticated -->
+{% if request.user.is_authenticated %}
+<BR>
+<!-- env -->
+{% if env %}
+    <h1 class="mt-5">Environment "{{ env }}"</h1>
+    <BR>
+    <p class="lead"><b>{{ env_num }}</b> total packets were found in this environment.</p>
+    <p class="lead"><b>{{ mac_total }}</b> total devices.</p>
+    <p class="lead"><b>{{ mac_ipv4 }}</b> devices produced IPv4 packets. <b>{{ num_ipv4 }}</b> IPv4 packets found.</p>
+    <p class="lead"><b>{{ mac_ipv6 }}</b> devices produced IPv6 packets, <b>{{ num_ipv6 }}</b> IPv6 packets found.</p>
+    <p class="lead"><b>{{ mac_noip }}</b> devices produced no-ip packets, <b>{{ num_noip }}</b> no-ip packets found.</p>
+    <BR>
+
+    <h4>MAC LIST</h4>
+    <div class="table-responsive">
+        <table class="table table-striped table-hover table-sm">
+            <thead>
+                <th>Mac</th>
+                <th>Manufacturer</th>
+                <th>Traffic</th>
+                <th>Packets found</th>
+            </thead>
+            <tbody>
+                {% for mac in mac_list %}
+                <tr>
+                        <td>
+                            <a href="/environments/{{ env }}/mac/{{ mac.name }}?start-time={{ inidate }}&end-time={{ enddate }}"> {{ mac.name }}  </a>
+                        </td>
+                        <td>
+                            <a href="/environments/{{ env }}/mac/{{ mac.name }}?start-time={{ inidate }}&end-time={{ enddate }}"> {{ mac.manufacturer }}  </a>
+                        </td>
+                        <td>
+                            {% if mac.ipv4 %}
+                            <a href="/environments/{{ env }}/mac/{{ mac.name }}?start-time={{ inidate }}&end-time={{ enddate }}"> IPV4 </a>
+                            {% endif %}
+                            {% if mac.ipv6 %}
+                            <a href="/environments/{{ env }}/mac/{{ mac.name }}?start-time={{ inidate }}&end-time={{ enddate }}"> IPV6 </a>
+                            {% endif %}
+                            {% if mac.noip %}
+                            <a href="/environments/{{ env }}/mac/{{ mac.name }}?start-time={{ inidate }}&end-time={{ enddate }}"> NOIP </a>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a href="/environments/{{ env }}/mac/{{ mac.name }}?start-time={{ inidate }}&end-time={{ enddate }}"> {{ mac.num }} </a>
+                        </td>
+                </tr>
+                {% endfor %}
+            <tbody>
+        </table>
+    </div>
+
+    <BR>
+    <h4>PROTOCOL LIST</h4>
+    <div class="table-responsive">
+        <table class="table table-striped table-hover table-sm">
+            <thead>
+                <th>Protocol</th>
+                <th>Packets found</th>
+            </thead>
+            <tbody>
+                {% for proto in proto_list %}
+                <tr>
+                        <td>
+                            <a href="/environments/{{ env }}/protocol/{{ proto.name }}?start-time={{ inidate }}&end-time={{ enddate }}"> {{ proto.name }}  </a>
+                        </td>
+                        <td>
+                            <a href="/environments/{{ env }}/protocol/{{ proto.name }}?start-time={{ inidate }}&end-time={{ enddate }}"> {{ proto.num }} </a>
+                        </td>
+                </tr>
+                {% endfor %}
+            <tbody>
+        </table>
+    </div>
+        
+
+<!-- env -->
+{% else %}
+    <div class="center">
+    <h1 class="mt-5">This environment does not exist.</h1>
+    </div>
+<!-- env -->
+{% endif %}
+
+<!-- request.user.is_authenticated -->
+{%else%}
+
+    <div class="center">
+    <h1 class="mt-5">User is not authenticated. Please log in.</h1>
+    </div>
+
+<!-- request.user.is_authenticated -->
+{%endif%}
+
+{% endblock %}

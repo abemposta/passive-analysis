@@ -1,0 +1,43 @@
+{% load packets_extras %}
+    <div class="card">
+        <div class="card-header">
+            Analysis
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">About LLMNR</h5>
+            <p class="card-text">The following information was detected analyzing only packets from this protocol:</p>
+            <ul>
+                <!-- MANUFACTURER -->
+                {% for manufacturer in protocol_info|fields:"LLMNR"|fields:"manufacturer" %}
+                <li><strong>Manufacturer detected:</strong> {{ manufacturer }}</li>
+                {% endfor %}
+
+                <!-- IPv6 -->
+                {% for ip in protocol_info|fields:"LLMNR"|fields:"ip" %}
+                <li><strong>IP detected:</strong> {{ ip }}</li>
+                {% endfor %}
+
+                <!-- OPERATING SYSTEM -->
+                <li><strong>Operating System:</strong> Most likely a <b>Windows</b> system.</li>
+
+                <!-- APPLICATION PORT -->
+                {% for port in protocol_info|fields:"LLMNR"|fields:"port" %}
+                    {% if port %}
+                    <li><strong>Application port:</strong> {{ port }}</li>
+                    {% endif %}
+                {% endfor %}
+
+                <!-- QUERIES -->
+                <li><strong>Queries:</strong> </li>
+                {% for query in protocol_info|fields:"LLMNR"|fields:"queries" %}
+                    <ul>
+                    {% if query %}
+                    <li>{{ query }}</li>
+                    {% endif %}
+                    </ul>
+                {% endfor %}
+
+
+            </ul>
+        </div>
+    </div>

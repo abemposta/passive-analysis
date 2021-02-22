@@ -1,0 +1,17 @@
+{% extends "packets/protocol.html" %} {%block protoinfo%}
+
+    <div class="card">
+        <div class="card-header">
+            Analysis
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">About {{ protocol }}</h5>
+            <p class="card-text">This protocol can give information such as:</p>
+            <ul>
+                <li><strong>Manufacturer:</strong> The first bits of the MAC of the devices are related to the device manufacturer. If the user did not change its MAC, the MAC address itself will reveal the device manufacturer.</li>
+                <li><strong>IP address:</strong> This protocol uses the IP layer, so you can get the device IP address.</li>
+            </ul>
+        </div>
+    </div>
+
+{% endblock %}

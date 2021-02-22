@@ -1,0 +1,53 @@
+{% extends "packets/base.html" %} {%block content%}
+
+{% if request.user.is_authenticated %}
+<BR>
+
+    {% if mac_list %}
+    <BR>
+    <BR>
+    {% block protoinfo %}
+    {% endblock %}
+
+
+    <h1 class="mt-5">Devices that sent {{ protocol }} packets:</h1>
+    <div class="table-responsive">
+        <table class="table table-striped table-hover table-sm">
+          <thead>
+              <th>Mac</th>
+              <th>Manufacturer</th>
+              <th>Num packets</th>
+          </thead>
+          <tbody>
+            {% for mac in mac_list %}
+              <tr>
+                    <td>
+                        <a href="/environments/{{ env }}/mac/{{ mac.name }}/protocol/{{ protocol }}?page=1&start-time={{ inidate }}&end-time={{ enddate }}"> {{ mac.name }}  </a>
+                    </td>
+                    <td>
+                        <a href="/environments/{{ env }}/mac/{{ mac.name }}/protocol/{{ protocol }}?page=1&start-time={{ inidate }}&end-time={{ enddate }}"> {{ mac.manufacturer }}  </a>
+                    </td>
+                    <td>
+                        <a href="/environments/{{ env }}/mac/{{ mac.name }}/protocol/{{ protocol }}?page=1&start-time={{ inidate }}&end-time={{ enddate }}"> {{ mac.num }}  </a>
+                    </td>
+              </tr>
+            {% endfor %}
+          <tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="center">
+    <h1 class="mt-5">No packets saved for this protocol. Try another one.</h1>
+    </div>
+    {% endif %}
+
+
+{%else%}
+
+    <div class="center">
+    <h1 class="mt-5">You must log in before accessing this software</h1>
+    </div>
+
+{%endif%}
+
+{% endblock %}

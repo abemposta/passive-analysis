@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es-es">
+  {% load static %}
+    <!-- HEAD -->
+    <head>
+        <title>Passive Traffic Analysis</title>
+       
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+       
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+        <link href="{% static "packets/css/signin.css"%}" rel="stylesheet">
+
+    </head>
+
+    <!-- BODY -->
+    <body>
+        <header>
+        <!-- NAV -->
+        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+            <a class="navbar-brand" href="{% url 'index'%}">Passive Traffic Analysis</a>
+            <!-- BUTTON -->
+            <button class="navbar-toggler " type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div id="navbarCollapse" class="collapse navbar-collapse">
+                <ul class="navbar-nav ml-auto" >
+                    {% if user.is_authenticated %}
+                    {% if env %}
+                    <li class="nav-item nav-link"><a href="{% url 'stats' env %}">Traffic stats </a></li>
+                    <li class="nav-item nav-link"><a href="{% url 'environment' env %}?start-time={{ inidate }}&end-time={{ enddate }}">{{ env }} </a></li>
+                    {% endif %}
+                    {% if mac %}
+                    <li class="nav-item nav-link"><a href="{% url 'stats_mac' env mac %}">MAC stats </a></li>
+                    <li class="nav-item nav-link"><a href="{% url 'mac' env mac %}?start-time={{ inidate }}&end-time={{ enddate }}">{{ mac }} </a></li>
+                    {% endif %}
+                    {% if protocol %}
+                    <li class="nav-item nav-link"><a href="{% url 'protocol' env protocol %}?start-time={{ inidate }}&end-time={{ enddate }}">{{ protocol }} </a></li>
+                    {% endif %}
+                    <li class="nav-item nav-link"><a href="{% url 'logout_view'%}">User {{request.user.username}} logout</a></li>
+                    {% else %}
+                    <li class="nav-item"><a href="{% url 'user_login'%}">Login</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+
+        </nav>
+        </header>
+       
+        <main role="main" >
+            <div class="container">
+
+                <br>
+                <br>
+                {% if user.is_authenticated %}
+                <BR>
+                <BR>
+                {% if not dailystats %}
+                <div class="container mt-100">
+                        <form class="row" method="get">
+                            {% if inidate %}
+                            <div class="col-md-4"> <label class="label label-default" for="start-time">From</label> 
+                            <input type="datetime-local" id="start-time"
+                            name="start-time" value="{{ inidate }}"
+                            min="{{ oldest_timestamp }}" max="{{ newest_timestamp }}">
+                            {% elif oldest_timestamp and newest_timestamp %}
+                            <div class="col-md-4"> <label class="label label-default" for="start-time">From</label> 
+                            <input type="datetime-local" id="start-time"
+                            name="start-time" value="{{ oldest_timestamp }}"
+                            min="{{ oldest_timestamp }}" max="{{ newest_timestamp }}">
+                            {% endif %}
+                            {% if enddate %}
+                            </div>
+                            <div class="col-md-4"> <label>To</label> 
+                            <input type="datetime-local" id="end-time"
+                            name="end-time" value="{{ enddate }}"
+                            min="{{ oldest_timestamp }}" max="{{ newest_timestamp }}">
+                            {% elif oldest_timestamp and newest_timestamp %}
+                            </div>
+                            <div class="col-md-4"> <label>To</label> 
+                            <input type="datetime-local" id="end-time"
+                            name="end-time" value="{{ newest_timestamp }}"
+                            min="{{ oldest_timestamp }}" max="{{ newest_timestamp }}">
+                            {% endif %}
+                            {% if inidate and enddate or oldest_timestamp and newest_timestamp %}
+                            </div>
+                            <div class="col-md-2"> <button class="btn btn-primary pro-button w-100">Search Interval </button> </div>
+                            <div class="col-md-2"> <a href="?" class="btn btn-primary btn-danger pro-button w-100">Reset Interval </a> </div>
+                            {% endif %}
+                        </form>
+                </div>
+                {% else %}
+                <div class="container mt-100">
+                        <form class="row center mx-auto" method="get">
+                            <div class="col-md-4"></div>
+                            <div class="col-md-4"> <label>Day</label> 
+                            <input type="date" id="day"
+                            name="day" value="{{ day }}">
+                            </div>
+                            <div class="col-md-4"> <button class="btn btn-primary pro-button w-100">Go </button> </div>
+                        </form>
+                </div>
+                <BR>
+                {% endif %}
+                <!-- USER NOT AUTHENTICATED -->
+                {% else %}
+                {% endif %}
+
+                {% block content %}{% endblock %}
+
+            </div>
+        </main>
+       
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <footer class="footer ">
+            <div class="container">
+                <div class="row well ml-t">
+                    <div class="col-lg-4 col-md-4">
+                        <p class="m-t">Copyright &copy <a href="https://www.abemposta.com" target="_blank">www.abemposta.com</a> 2020</p>
+                        <p>All Rights Reserved.</p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    </body>
+</html>
+
+
+

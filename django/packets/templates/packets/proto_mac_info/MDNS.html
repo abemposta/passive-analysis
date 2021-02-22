@@ -1,0 +1,94 @@
+{% load packets_extras %}
+    <div class="card">
+        <div class="card-header">
+            Analysis
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">About MDNS</h5>
+            <p class="card-text">The following information was detected analyzing only packets from this protocol:</p>
+            <ul>
+                <!-- MANUFACTURER -->
+                {% for manufacturer in protocol_info|fields:"MDNS"|fields:"manufacturer" %}
+                <li><strong>Manufacturer detected:</strong> {{ manufacturer }}</li>
+                {% endfor %}
+
+                <!-- IPv6 -->
+                {% for ip in protocol_info|fields:"MDNS"|fields:"ip" %}
+                <li><strong>IPv4 detected:</strong> {{ ip }}</li>
+                {% endfor %}
+
+                <!-- IPv6 -->
+                {% for ipv6 in protocol_info|fields:"MDNS"|fields:"ipv6" %}
+                <li><strong>IPv6 detected:</strong> {{ ipv6 }}</li>
+                {% endfor %}
+
+                <!-- APPLICATION PORT -->
+                {% for port in protocol_info|fields:"MDNS"|fields:"port" %}
+                    {% if port %}
+                    <li><strong>Application port:</strong> {{ port }}</li>
+                    {% endif %}
+                {% endfor %}
+
+                <!-- QUERIES -->
+                {% if protocol_info|fields:"MDNS"|fields:"queries" %}
+                <li><strong>Queries:</strong> </li>
+                {% endif %}
+                {% for query in protocol_info|fields:"MDNS"|fields:"queries" %}
+                    <ul>
+                    {% if query %}
+                    <li>{{ query }}</li>
+                    {% endif %}
+                    </ul>
+                {% endfor %}
+
+                <!-- RESPONSES -->
+                {% if protocol_info|fields:"MDNS"|fields:"responses" %}
+                <li><strong>Responses:</strong> </li>
+                {% endif %}
+                {% for response in protocol_info|fields:"MDNS"|fields:"responses" %}
+                    <ul>
+                    {% if response %}
+                    <li>{{ response }}</li>
+                    {% endif %}
+                    </ul>
+                {% endfor %}
+
+                <!-- TARGET -->
+                {% if protocol_info|fields:"MDNS"|fields:"srv_target" %}
+                <li><strong>Target:</strong> </li>
+                {% endif %}
+                {% for srv_target in protocol_info|fields:"MDNS"|fields:"srv_target" %}
+                    <ul>
+                    {% if srv_target %}
+                    <li>{{ srv_target }}</li>
+                    {% endif %}
+                    </ul>
+                {% endfor %}
+
+                <!-- PORT -->
+                {% if protocol_info|fields:"MDNS"|fields:"srv_port" %}
+                <li><strong>Server application ports:</strong> </li>
+                {% endif %}
+                {% for srv_port in protocol_info|fields:"MDNS"|fields:"srv_port" %}
+                    <ul>
+                    {% if srv_port %}
+                    <li>{{ srv_port }}</li>
+                    {% endif %}
+                    </ul>
+                {% endfor %}
+
+                <!-- DOMAIN -->
+                {% if protocol_info|fields:"MDNS"|fields:"domain" %}
+                <li><strong>Server PTR Domain name:</strong> </li>
+                {% endif %}
+                {% for domain in protocol_info|fields:"MDNS"|fields:"domain" %}
+                    <ul>
+                    {% if domain %}
+                    <li>{{ domain }}</li>
+                    {% endif %}
+                    </ul>
+                {% endfor %}
+
+            </ul>
+        </div>
+    </div>

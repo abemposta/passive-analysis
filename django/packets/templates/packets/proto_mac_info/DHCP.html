@@ -1,0 +1,49 @@
+{% load packets_extras %}
+    <div class="card">
+        <div class="card-header">
+            Analysis
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">About DHCP</h5>
+            <p class="card-text">The following information was detected analyzing only packets from this protocol:</p>
+            <ul>
+                <!-- MANUFACTURER -->
+                {% for manufacturer in protocol_info|fields:"DHCP"|fields:"manufacturer" %}
+                <li><strong>Manufacturer detected:</strong> {{ manufacturer }}</li>
+                {% endfor %}
+
+
+                <!-- OPERATING SYSTEM -->
+                {% for ttl in protocol_info|fields:"DHCP"|fields:"ttl" %}
+                    {% if ttl == "128" %}
+                    <li><strong>Operating system:</strong> Probably Windows due to a TTL value of {{ ttl }}</li>
+                    {% endif %}
+                    {% if ttl == "64" %}
+                    <li><strong>Operating system:</strong> Probably UNIX-like due to a TTL value of {{ ttl }}.</li>
+                    {% endif %}
+                {% endfor %}
+
+                <!-- HOSTNAME -->
+                {% for hostname in protocol_info|fields:"DHCP"|fields:"hostname" %}
+                    {% if hostname %}
+                    <li><strong>Hostname:</strong> {{ hostname }}</li>
+                    {% endif %}
+                {% endfor %}
+
+                <!-- VENDOR CLASS -->
+                {% for vendor_class in protocol_info|fields:"DHCP"|fields:"vendor_class" %}
+                    {% if vendor_class %}
+                    <li><strong>Vendor class:</strong> {{ vendor_class }}</li>
+                    {% endif %}
+                {% endfor %}
+
+                <!-- APPLICATION PORT -->
+                {% for port in protocol_info|fields:"DHCP"|fields:"port" %}
+                    {% if port %}
+                    <li><strong>Application port:</strong> {{ port }}</li>
+                    {% endif %}
+                {% endfor %}
+
+            </ul>
+        </div>
+    </div>

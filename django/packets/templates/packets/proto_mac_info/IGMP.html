@@ -1,0 +1,22 @@
+{% load packets_extras %}
+    <div class="card">
+        <div class="card-header">
+            Analysis
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">About IGMP</h5>
+            <p class="card-text">The following information was detected analyzing only packets from this protocol:</p>
+            <ul>
+                <!-- MANUFACTURER -->
+                {% for manufacturer in protocol_info|fields:"IGMP"|fields:"manufacturer" %}
+                <li><strong>Manufacturer detected:</strong> {{ manufacturer }}</li>
+                {% endfor %}
+
+                <!-- IP address -->
+                {% for ip in protocol_info|fields:"IGMP"|fields:"ip" %}
+                <li><strong>IP detected:</strong> {{ ip }}</li>
+                {% endfor %}
+
+            </ul>
+        </div>
+    </div>

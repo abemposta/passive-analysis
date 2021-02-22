@@ -1,0 +1,9 @@
+Django>=3.0
+sqlparse
+djongo
+pymongo
+matplotlib
+## api
+djangorestframework
+django-cors-headers
+django-crispy-forms

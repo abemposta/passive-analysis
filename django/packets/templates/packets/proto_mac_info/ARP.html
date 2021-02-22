@@ -1,0 +1,22 @@
+{% load packets_extras %}
+    <div class="card">
+        <div class="card-header">
+            Analysis
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">About ARP</h5>
+            <p class="card-text">The following information was detected analyzing only packets from this protocol:</p>
+            <ul>
+                <!-- MANUFACTURER -->
+                {% for manufacturer in protocol_info|fields:"ARP"|fields:"manufacturer" %}
+                <li><strong>Manufacturer detected:</strong> {{ manufacturer }}</li>
+                {% endfor %}
+
+                {% comment %} <li><strong>Type of device:</strong> If the device has a lot of probe requests it is most likely some router or repeater. Check the <i>isprobe</i> ARP field to see if is a ARP probe packet.  </li> {% endcomment %}
+
+                {% for ip in protocol_info|fields:"ARP"|fields:"ip" %}
+                <li><strong>IP detected:</strong> {{ ip }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>

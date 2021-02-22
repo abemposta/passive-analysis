@@ -1,0 +1,43 @@
+{% extends "packets/base.html" %} {%block content%}
+
+{% if request.user.is_authenticated %}
+
+    {% if env_list %}
+
+    <h1 class="mt-5">Environments available:</h1>
+    <div class="table-responsive">
+        <table class="table table-striped table-sm table-hover">
+          <thead>
+              <th>Name</th>
+              <th>Num packets</th>
+          </thead>
+          <tbody>
+            {% for env in env_list %}
+              <tr class="clickable-row">
+                    <td>
+                        <a href="/environments/{{ env.name }}?start-time={{ inidate }}&end-time={{ enddate }}"> {{ env.name }}  </a>
+                    </td>
+                    <td>
+                        <a href="/environments/{{ env.name }}?start-time={{ inidate }}&end-time={{ enddate }}"> {{ env.num }} </a>
+                    </td>
+              </tr>
+            {% endfor %}
+          <tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="center">
+    <p>No environments exist. Populate the database with packet data before using this.</p>
+    </div>
+    {% endif %}
+
+
+{%else%}
+
+    <div class="center">
+    <h1 class="mt-5">You must log in before accessing this software</h1>
+    </div>
+
+{%endif%}
+
+{% endblock %}

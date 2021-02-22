@@ -1,0 +1,20 @@
+{% extends "packets/protocol.html" %} {%block protoinfo%}
+
+    <div class="card">
+        <div class="card-header">
+            Analysis
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">About {{ protocol }}</h5>
+            <p class="card-text">This protocol can give information such as:</p>
+            <ul>
+                <li><strong>Manufacturer:</strong> The first bits of the MAC of the devices are related to the device manufacturer. If the user did not change its MAC, the MAC address itself will reveal the device manufacturer.</li>
+                <li><strong>IP address:</strong> This protocol uses the IP layer, so you can get the device IP address.</li>
+                <li><strong>Application port: </strong> This protocol uses the UDP protocol. The value <i>srcport</i> of the UDP protocol contains the port used by the application. </li>
+                <li><strong>Operating System:</strong> This protocol uses the IP protocol. OSs use different TTL. For example, linux might use a TTL of 64 meanwhile windows might use a TTL of 128. </li>
+                <li><strong>User agent: </strong> Sometimes the SSDP protocol contains a value <i>http_user_agent</i> with the browser version and operating system.</li>
+            </ul>
+        </div>
+    </div>
+
+{% endblock %}

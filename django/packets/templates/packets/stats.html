@@ -1,0 +1,50 @@
+{% extends "packets/base.html" %} {%block content%}
+
+{% if request.user.is_authenticated %}
+
+    {% if env %}
+    {% if figure %}
+    <!-- IMAGE -->
+    <div class="center">
+    <img class="mx-auto d-block img-responsive img-fluid" src="data:image/png;base64,{{ figure }}">
+    </div>
+    <!-- PAGINATION -->
+    <div class="pagination">
+        <span class="step-links">
+            {% if prevdate %}
+                <a href="?day={{ oldest_timestamp }}">&laquo; First</a>
+                <a href="?day={{ prevdate }}">Previous</a>
+            {% endif %}
+
+            <span class="current">
+                viewing {{ day }}
+            </span>
+
+            {% if nextdate %}
+                <a href="?day={{ nextdate }}">Next</a>
+                <a href="?day={{ newest_timestamp }}">Last &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+    
+    {% else %}
+    <div class="center">
+    <p>The figure could not be created.</p>
+    </div>
+    {% endif %}
+    {% else %}
+    <div class="center">
+    <p>This environment does not exist.</p>
+    </div>
+    {% endif %}
+
+
+{%else%}
+
+    <div class="center">
+    <h1 class="mt-5">You must log in before accessing this software</h1>
+    </div>
+
+{%endif%}
+
+{% endblock %}

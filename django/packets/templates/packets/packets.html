@@ -1,0 +1,78 @@
+{% extends "packets/base.html" %} {%block content%}
+{% load packets_extras %}
+
+{% if request.user.is_authenticated %}
+<BR>
+
+    {% if page_obj %}
+
+    <BR>
+    <BR>
+    <h2>Packet captured at {{ timestamp }}</h2>
+
+    {% if protocol_info|fields:protocol|fields:"template" %}
+        <BR>
+        {% include protocol_info|fields:protocol|fields:"template" %}
+    {% endif %}
+
+    <BR>
+
+
+    {% for layer in layers %}
+    <p><strong>LAYER {{ layer }}</strong></p>
+    <div class="table-responsive">
+        <table class="table table-striped table-sm">
+          <thead class="thead-dark">
+            {% for field in packet.claves|fields:layer %}
+              <th>{{ field }}</th>
+            {% endfor %}
+          </thead>
+          <tbody>
+              <tr>
+                {% for field_value in packet.valores|fields:layer %}
+                    <td class="align-middle">
+                        <p> {{ field_value }}  </p>
+                    </td>
+                {% endfor %}
+              </tr>
+          <tbody>
+        </table>
+    </div>
+    <BR>
+    {% endfor %}
+
+    <!-- PAGINATION -->
+    <div class="pagination">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a href="?page=1&start-time={{ inidate }}&end-time={{ enddate }}">&laquo; First</a>
+                <a href="?page={{ page_obj.previous_page_number }}&start-time={{ inidate }}&end-time={{ enddate }}">Previous</a>
+            {% endif %}
+
+            <span class="current">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+            </span>
+
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}&start-time={{ inidate }}&end-time={{ enddate }}">Next</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}&start-time={{ inidate }}&end-time={{ enddate }}">Last &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+
+    {% else %}
+    <div class="center">
+    <h1 class="mt-5">No packets found for this protocol and mac</h1>
+    </div>
+    {% endif %}
+
+
+{%else%}
+
+    <div class="center">
+    <h1 class="mt-5">You must log in before accessing this software</h1>
+    </div>
+
+{%endif%}
+
+{% endblock %}
